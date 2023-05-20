@@ -36,12 +36,12 @@ import javax.swing.AbstractListModel;
 public class VentanaAddRoom extends JFrame implements ActionListener {
 
 	private JPanel panelPrincipal;
-	private JTextField textId;
-	private JTextField textTarifa;
+	private JTextField textId, textTarifa, textTamanhoM2, textVoltajeAC;
 	private JPanel panelOp;
 	protected JButton btnAddCama, btnRemoverCama, btnCancel, btnDone;
 	protected JRadioButton btnDoble, btnEstandar, btnSuite;
-	protected JCheckBox btnVista, btnCocina, btnBalcon;
+	protected JCheckBox btnVista, btnCocina, btnBalcon, checkBoxBalcon, checkBoxVista, checkBoxCocina, checkBoxAire, checkBoxCalefaccion,
+	checkBoxTV, checkBoxCafetera, checkBoxRopaCama, checkBoxTapetesHipo, checkBoxPlancha, checkBoxSecador, checkBoxUsbA, checkBoxUsbB, checkBoxDesayuno;
 	protected JList<String> list;
 	protected DefaultListModel<String> listaa;
 	
@@ -91,6 +91,29 @@ public class VentanaAddRoom extends JFrame implements ActionListener {
 		
 		JLabel lblTipo = new JLabel("Tipo:");
 		panelTipos.add(lblTipo);
+
+		// TEXT FIELDS??##############
+
+		JPanel panelTamanhoM2 = new JPanel();
+		panelOp.add(panelTamanhoM2);
+
+		JLabel lblTamanhoM2 = new JLabel("Tamanho (m^2):");
+		panelTamanhoM2.add(lblTamanhoM2);
+
+		textTamanhoM2 = new JTextField();
+		panelTamanhoM2.add(textTamanhoM2);
+		textTamanhoM2.setColumns(10);
+
+		JPanel panelVoltajeAC = new JPanel();
+		panelOp.add(panelVoltajeAC);
+
+		JLabel lblVoltajeAC = new JLabel("Voltaje AC:");
+		panelVoltajeAC.add(lblVoltajeAC);
+
+		textVoltajeAC = new JTextField();
+		panelVoltajeAC.add(textVoltajeAC);
+		textVoltajeAC.setColumns(10);
+
 		
 		// GRUPO DE BOTONES #############
 		
@@ -113,14 +136,50 @@ public class VentanaAddRoom extends JFrame implements ActionListener {
 		
 		// CHECK BOXES #####################
 		
-		btnBalcon = new JCheckBox("Balcon");
-		panelCama.add(btnBalcon);
 		
-		btnVista = new JCheckBox("Vista");
-		panelCama.add(btnVista);
-		
-		btnCocina = new JCheckBox("Cocina");
-		panelCama.add(btnCocina);
+
+		checkBoxBalcon = new JCheckBox("Balcón");
+		panelCama.add(checkBoxBalcon);
+
+		checkBoxVista = new JCheckBox("Vista");
+		panelCama.add(checkBoxVista);
+
+		checkBoxCocina = new JCheckBox("Cocina");
+		panelCama.add(checkBoxCocina);
+
+		checkBoxAire = new JCheckBox("Aire");
+		panelCama.add(checkBoxAire);
+
+		checkBoxCalefaccion = new JCheckBox("Calefacción");
+		panelCama.add(checkBoxCalefaccion);
+
+		checkBoxTV = new JCheckBox("TV");
+		panelCama.add(checkBoxTV);
+
+		checkBoxCafetera = new JCheckBox("Cafetera");
+		panelCama.add(checkBoxCafetera);
+
+		checkBoxRopaCama = new JCheckBox("Ropa de cama");
+		panelCama.add(checkBoxRopaCama);
+
+		checkBoxTapetesHipo = new JCheckBox("Tapetes hipoalergénicos");
+		panelCama.add(checkBoxTapetesHipo);
+
+		checkBoxPlancha = new JCheckBox("Plancha");
+		panelCama.add(checkBoxPlancha);
+
+		checkBoxSecador = new JCheckBox("Secador");
+		panelCama.add(checkBoxSecador);
+
+		checkBoxUsbA = new JCheckBox("USB A");
+		panelCama.add(checkBoxUsbA);
+
+		checkBoxUsbB = new JCheckBox("USB B");
+		panelCama.add(checkBoxUsbB);
+
+		checkBoxDesayuno = new JCheckBox("Desayuno");
+		panelCama.add(checkBoxDesayuno);
+
 		
 		JPanel panelCarac = new JPanel();
 		panelOp.add(panelCarac);
@@ -190,10 +249,26 @@ public class VentanaAddRoom extends JFrame implements ActionListener {
 				} else if (btnDoble.isSelected()) {
 					tipo = "doble";
 				}
-				Boolean vista = btnVista.isSelected();
-				Boolean balcon = btnBalcon.isSelected();
-				Boolean cocina = btnCocina.isSelected();
+				Boolean balcon = checkBoxBalcon.isSelected();
+				Boolean vista = checkBoxVista.isSelected();
+				Boolean cocina = checkBoxCocina.isSelected();
+				Boolean aire = checkBoxAire.isSelected();
+				Boolean calefaccion = checkBoxCalefaccion.isSelected();
+				Boolean tv = checkBoxTV.isSelected();
+				Boolean cafetera = checkBoxCafetera.isSelected();
+				Boolean ropaCama = checkBoxRopaCama.isSelected();
+				Boolean tapetesHipo = checkBoxTapetesHipo.isSelected();
+				Boolean plancha = checkBoxPlancha.isSelected();
+				Boolean secador = checkBoxSecador.isSelected();
+				Boolean usbA = checkBoxUsbA.isSelected();
+				Boolean usbB = checkBoxUsbB.isSelected();
+				Boolean desayuno = checkBoxDesayuno.isSelected();
+
 				Double tarifa = Double.parseDouble(textTarifa.getText());
+
+				Double tamanhoM2 = Double.parseDouble(textTamanhoM2.getText());
+				int voltajeAC = Integer.parseInt(textVoltajeAC.getText());
+
 				
 				for (int i =0; i<listaa.getSize();i++) {
 					if (listaa.getElementAt(i).equals("")||listaa.getElementAt(i)==null) {
@@ -220,7 +295,8 @@ public class VentanaAddRoom extends JFrame implements ActionListener {
 				{
 					JOptionPane.showMessageDialog(null, "Ya existe la habitacion 1610.");	
 				}else{
-					Hotel.getInstance().anadirHabs1(id, tipo, balcon, vista, cocina, tarifa, false, listaCamas);
+					Hotel.getInstance().anadirHabs1(id, tipo, balcon, vista, cocina, listaCamas, tarifa, false, tamanhoM2, aire,
+					calefaccion, tv, cafetera, ropaCama, tapetesHipo, plancha, secador, voltajeAC, usbA, usbB, desayuno);
 					dispose();
 					JOptionPane.showMessageDialog(null, "Se añadio correctamente");	
 				}

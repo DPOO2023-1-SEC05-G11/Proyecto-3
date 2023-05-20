@@ -41,8 +41,22 @@ public class LoaderSaver {
 				
 				Double tarifa = Double.parseDouble(atributos[8]);
 				boolean ocupado = Boolean.parseBoolean(atributos[9]);
+				Double tamanhoM2 = Double.parseDouble(atributos[10]);
+				boolean aire = Boolean.parseBoolean(atributos[11]);
+				boolean calefaccion = Boolean.parseBoolean(atributos[12]);
+				boolean tv = Boolean.parseBoolean(atributos[13]);
+				boolean cafetera = Boolean.parseBoolean(atributos[14]);
+				boolean ropaCama = Boolean.parseBoolean(atributos[15]);
+				boolean tapetesHipo = Boolean.parseBoolean(atributos[16]);
+				boolean plancha = Boolean.parseBoolean(atributos[17]);
+				boolean secador = Boolean.parseBoolean(atributos[18]);
+				int voltajeAC = Integer.parseInt(atributos[19]);
+				boolean usbA = Boolean.parseBoolean(atributos[20]);
+				boolean usbB = Boolean.parseBoolean(atributos[21]);
+				boolean desayuno = Boolean.parseBoolean(atributos[22]);
 				
-				Habitacion room = new Habitacion(id, tipo, balcon, vista, cocina, camas, tarifa, ocupado);
+				Habitacion room = new Habitacion(id, tipo, balcon, vista, cocina, camas, tarifa, ocupado, tamanhoM2, aire,
+						calefaccion, tv, cafetera, ropaCama, tapetesHipo, plancha, secador, voltajeAC, usbA, usbB, desayuno);
 				habitaciones.add(room);
 			}
 		} catch (IOException e) {
@@ -70,7 +84,12 @@ public class LoaderSaver {
                 camasString += ";";
                 camasString += camas.size() > 2 ? camas.get(2).stringASalvar() : "0";
 
-                writer.write(h.getId() + ";" + h.getTipo() + ";" + h.tieneBalcon() + ";" + h.tieneVista() + ";" + h.tieneCocina() + ";" + camasString + ";" + h.getTarifa() + ";" + h.isOcupado() + "\n");
+                writer.write(h.getId() + ";" + h.getTipo() + ";" + h.tieneBalcon() + ";" + h.tieneVista() + 
+                		";" + h.tieneCocina() + ";" + camasString + ";" + h.getTarifa() + ";" + h.isOcupado() + 
+                		";" + h.getTamanhoM2() + ";" + h.tieneAire()+ ";" + h.tieneCalefaccion()+ ";" + h.tieneTv() + 
+                		";" + h.tieneCafetera() + ";" + h.tieneRopaCama() + ";" + h.tieneTapetesHipo() + ";" + 
+                		h.tienePlancha() + ";" + h.tieneSecador() + ";" + h.getVoltajeAC() + ";" + h.tieneUsbA() + 
+                		";" + h.tieneUsbB() + ";" + h.tieneDesayuno() + "\n");
             }
 
             writer.close();

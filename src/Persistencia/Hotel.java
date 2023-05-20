@@ -571,12 +571,25 @@ public class Hotel
 		
 		Double tarifa = Double.parseDouble(input("Por favor ingrese la tarifa de la habitacion\n"));
 		Boolean ocupado = Boolean.parseBoolean(input("Por favor ingrese si la habitación está actualmente ocupada\n true/false"));
+		Double tamanhoM2 = Double.parseDouble(input("Por favor ingrese el tamaño en metros cuadrados de la habitacion\n"));
+		Boolean aire = Boolean.parseBoolean(input("Por favor ingrese si la habitación tiene aire acondicionado\n true/false"));
+		Boolean calefaccion = Boolean.parseBoolean(input("Por favor ingrese si la habitación tiene calefacción\n true/false"));
+		Boolean tv = Boolean.parseBoolean(input("Por favor ingrese si la habitación tiene TV\n true/false"));
+		Boolean cafetera = Boolean.parseBoolean(input("Por favor ingrese si la habitación tiene cafetera\n true/false"));
+		Boolean ropaCama = Boolean.parseBoolean(input("Por favor ingrese si la habitación tiene ropa de cama\n true/false"));
+		Boolean tapetesHipo = Boolean.parseBoolean(input("Por favor ingrese si la habitación tiene tapetes hipoalergénicos\n true/false"));
+		Boolean plancha = Boolean.parseBoolean(input("Por favor ingrese si la habitación tiene plancha\n true/false"));
+		Boolean secador = Boolean.parseBoolean(input("Por favor ingrese si la habitación tiene secador de pelo\n true/false"));
+		int voltajeAC = Integer.parseInt(input("Por favor ingrese el voltaje AC de la habitación"));
+		Boolean usbA = Boolean.parseBoolean(input("Por favor ingrese si la habitación tiene tomas USB-A\n true/false"));
+		Boolean usbB = Boolean.parseBoolean(input("Por favor ingrese si la habitación tiene tomas USB-B\n true/false"));
+		Boolean desayuno = Boolean.parseBoolean(input("Por favor ingrese si la habitación incluye desayuono\n true/false"));
 
-		Habitacion habitacion = new Habitacion(id, tipo, balcon, vista, cocina, camas, tarifa, ocupado);
+		Habitacion habitacion = new Habitacion(id, tipo, balcon, vista, cocina, camas, tarifa, ocupado, tamanhoM2, aire,
+				calefaccion, tv, cafetera, ropaCama, tapetesHipo, plancha, secador, voltajeAC, usbA, usbB, desayuno);
 
 		return habitacion;
 	}
-
 	public void preguntarHabitaciones(LocalDate fecha, int duracion)
 	{
 		ArrayList<Habitacion> habsList = new ArrayList<Habitacion>();
@@ -586,15 +599,32 @@ public class Hotel
 		Boolean balcon = input("Escriba '1', si quiere balcón, '0', si no").equals("1");
 		Boolean vista = input("Escriba '1' si quiere vista, '0' si no").equals("1");
 		Boolean cocina = input("Escriba '1' si quiere cocina, '0' si no").equals("1");
+		Boolean aire = input("Escriba '1' si quiere aire acondicionado, '0' si no").equals("1");
+		Boolean calefaccion = input("Escriba '1' si quiere calefacción, '0' si no").equals("1");
+		Boolean tv = input("Escriba '1' si quiere TV, '0' si no").equals("1");
+		Boolean cafetera = input("Escriba '1' si quiere cafetera, '0' si no").equals("1");
+		Boolean ropaCama = input("Escriba '1' si quiere ropa de cama, '0' si no").equals("1");
+		Boolean tapetesHipo = input("Escriba '1' si quiere tapetes hipoalegénicos, '0' si no").equals("1");
+		Boolean plancha = input("Escriba '1' si quiere planca, '0' si no").equals("1");
+		Boolean secador = input("Escriba '1' si quiere secador de pelo, '0' si no").equals("1");
+		Boolean usbA = input("Escriba '1' si quiere tomas USB-A, '0' si no").equals("1");
+		Boolean usbB = input("Escriba '1' si quiere tomas USB.B, '0' si no").equals("1");
+		Boolean desayuno = input("Escriba '1' si quiere desayuno incluído, '0' si no").equals("1");
 
 		
 		int adultos = Integer.parseInt(input("Ingrese el numero de adultos"));
 		int ninos = Integer.parseInt(input("Ingrese el numero de ninos"));
+		Double tamanhoM2 = Double.parseDouble(input("Ingrese el tamaño en metros cuadrados"));
+		int voltajeAC = Integer.parseInt(input("Ingrese el voltaje AC"));
 		
 		for (Habitacion hab:habitaciones) {
 			if (tipo.equals(hab.getTipo()) && balcon.equals(hab.tieneBalcon()) && vista.equals(hab.tieneVista()) 
-					&& cocina.equals(hab.tieneCocina()) && hab.getEspacioAdultos() >= adultos && 
-					hab.getEspacioNinos() + hab.getEspacioAdultos() - adultos >= ninos//Porque ninos pueden dormir en cama de otros tamaños.
+					&& cocina.equals(hab.tieneCocina()) && aire.equals(hab.tieneAire()) && calefaccion.equals(hab.tieneCalefaccion()) 
+					&& tv.equals(hab.tieneTv()) && cafetera.equals(hab.tieneCafetera()) && ropaCama.equals(hab.tieneRopaCama())
+					&& tapetesHipo.equals(hab.tieneTapetesHipo()) && plancha.equals(hab.tienePlancha()) && secador.equals(hab.tieneSecador())
+					&& usbA.equals(hab.tieneUsbA()) && usbB.equals(hab.tieneUsbB()) && desayuno.equals(hab.tieneDesayuno())
+					&& hab.getTamanhoM2() >= tamanhoM2 && hab.getVoltajeAC() >= voltajeAC
+					&& hab.getEspacioAdultos() >= adultos && hab.getEspacioNinos() + hab.getEspacioAdultos() - adultos >= ninos//Porque ninos pueden dormir en cama de otros tamaños.
 					&& hab.libreEntre(fecha, duracion))
 				{
 					habsList.add(hab);
@@ -739,28 +769,25 @@ private int removeHabitacion2(int id)
 	}
 
 
-public void anadirHabs1(int id, String tipo, Boolean balcon, Boolean vista, Boolean cocina, Double tarifa, Boolean ocupado,
-		ArrayList<Cama> camas) {
+public void anadirHabs1(int id, String tipo, Boolean balcon, Boolean vista, Boolean cocina,ArrayList<Cama> camas, double tarifa, Boolean ocupado, double tamanhoM2, Boolean aire,
+Boolean calefaccion, Boolean tv, Boolean cafetera, Boolean ropaCama, Boolean tapetesHipo, Boolean plancha, Boolean secador, int voltajeAC, Boolean usbA, Boolean usbB, Boolean desayuno) {
 	for (Habitacion hab : this.habitaciones) 
 	{
 		System.out.println(hab);
 	}
-	Habitacion habitacion = crearHabitacion1(id,  tipo,  balcon,  vista,  cocina,  tarifa,  ocupado,
-			 camas);
+	Habitacion habitacion = crearHabitacion1(id, tipo, balcon, vista, cocina, camas, tarifa, ocupado, tamanhoM2, aire,
+	calefaccion, tv, cafetera, ropaCama, tapetesHipo, plancha, secador, voltajeAC, usbA, usbB, desayuno);
 	addHabitacion(habitacion);
 	LoaderSaver.salvarHabitaciones(habitaciones);
 	System.out.println("La habitacion se añadió correctamente.");
 }
 
-public Habitacion crearHabitacion1(int id, String tipo, Boolean balcon, Boolean vista, Boolean cocina, Double tarifa, Boolean ocupado,
-		ArrayList<Cama> camas)
+public Habitacion crearHabitacion1(int id, String tipo, Boolean balcon, Boolean vista, Boolean cocina,ArrayList<Cama> camas, 
+	double tarifa, Boolean ocupado, double tamanhoM2, Boolean aire, Boolean calefaccion, Boolean tv, Boolean cafetera, Boolean ropaCama, 
+	Boolean tapetesHipo, Boolean plancha, Boolean secador, int voltajeAC, Boolean usbA, Boolean usbB, Boolean desayuno)
 {
-	//ArrayList<Cama> camas = new ArrayList<>();
-	
-	/*camas.add(new Cama(cama1));
-	camas.add(new Cama(cama2));
-	camas.add(new Cama(cama3));*/
-	Habitacion habitacion = new Habitacion(id, tipo, balcon, vista, cocina, camas, tarifa, ocupado);
+	Habitacion habitacion = new Habitacion(id, tipo, balcon, vista, cocina, camas, tarifa, ocupado, tamanhoM2, aire,
+	calefaccion, tv, cafetera, ropaCama, tapetesHipo, plancha, secador, voltajeAC, usbA, usbB, desayuno);
 
 	return habitacion;
 }
