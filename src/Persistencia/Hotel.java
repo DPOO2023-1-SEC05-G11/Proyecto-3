@@ -28,6 +28,8 @@ public class Hotel
 	private HashMap<String, Servicio> servicios = new HashMap<String, Servicio>();
 	
 	private ArrayList<String> facturas = new ArrayList<String>();
+
+	private ArrayList<String> huespedUsuarios = new ArrayList<String>();
 		
 	/**
 	 * Este método sirve para imprimir un mensaje en la consola pidiéndole
@@ -100,8 +102,8 @@ public class Hotel
 	    
 	    return null;
 	}
-	
-	public void ejecutarAplicacion()
+
+	public void cargarDatos()
 	{
 		this.habitaciones = LoaderSaver.cargarHabitaciones();
 		for (String nombreServicio : LoaderSaver.serviciosACargar())
@@ -117,6 +119,14 @@ public class Hotel
 		LoaderSaver.salvarFacturas(facturas);
 
 		contadorFactura = LoaderSaver.getContadorFactura(facturas);
+
+		this.huespedUsuarios = LoaderSaver.cargarUsuarios();
+		LoaderSaver.salvarUsuarios(huespedUsuarios);
+	}
+	
+	public void ejecutarAplicacion()
+	{
+		cargarDatos();
 		
 		
 		String acceso = acceso();
@@ -176,6 +186,10 @@ public class Hotel
 		//  Auto-generated method stub
 		
 	}*/
+
+	public ArrayList<String> getHuespedLoginDetails(){
+		return this.huespedUsuarios;
+	}
 
 	private void crearConsumo() {
 	    
@@ -825,6 +839,42 @@ public String acceso1(String usuarioIngresado, String contrasenaIngresada) {
 	
 	return null;
 }
+
+public Boolean accesoHuesped(String usuarioIngresado, String contrasenaIngresada) {
+	for (String s : huespedUsuarios) {
+		String[] campos = s.split(";");
+		String usuario = campos[0];
+		String contrasena = campos[1];
+		
+		if (usuario.equals(usuarioIngresado) && contrasena.equals(contrasenaIngresada)) {
+			return true;
+		}
+	}
+	return false;
+}
+
+public Boolean usernameAvailable(String username)
+{
+	if (huespedUsuarios.size()==0)
+	{
+		return true;
+	}
+	for (String s : huespedUsuarios)
+	{
+		if (username.equals(s.split(";")[0]))
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+public void newHuespedUsuario(String username, String password)
+{
+	huespedUsuarios.add(username+";"+password);
+	LoaderSaver.salvarUsuarios(huespedUsuarios);
+}
+
 public Habitacion buscarHabs1(Integer id) {
 //int id = Integer.parseInt(input("Ingrese el id de la habitación que desea buscar."));
 if(buscarHabitacion(id) == null){
@@ -905,7 +955,7 @@ public Integer[] ocupacionHabs() {
 
 public static void main(String[] args)
 {
-	instance = new Hotel();
+	instance = getInstance();
 	presentarVentana();
 	instance.ejecutarAplicacion();
 }

@@ -6,6 +6,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -366,6 +369,34 @@ public class LoaderSaver {
             System.out.println("An error occurred: " + e.getMessage());
         }
 	}
+
+
+	///////////////////////////////// Logins de usuarios ///////////////////////////////
+
+
+	public static ArrayList<String> cargarUsuarios() {
+		ArrayList<String> usuarios = new ArrayList<>();
+		Path filePath = Paths.get("data/huesped-login-details.txt");
+		
+		try {
+			usuarios = new ArrayList<>(Files.readAllLines(filePath));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return usuarios;
+	}
+
+	public static void salvarUsuarios(ArrayList<String> usuarios) {
+		Path filePath = Paths.get("data/huesped-login-details.txt");
+	
+		try {
+			Files.write(filePath, usuarios);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	
 }
 
