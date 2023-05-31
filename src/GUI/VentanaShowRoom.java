@@ -10,6 +10,7 @@ import Modelo.Habitacion;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
+import java.util.ArrayList;
 
 import javax.swing.JLabel;
 
@@ -50,6 +51,61 @@ public class VentanaShowRoom extends JFrame {
         JLabel lblEspacioAdultos = new JLabel("Espacio adultos: " + hab.getEspacioAdultos());
         lblEspacioAdultos.setAlignmentX(CENTER_ALIGNMENT);
         panel.add(lblEspacioAdultos);
+
+        ArrayList<String> tiene = new ArrayList<>();
+        ArrayList<String> no_tiene = new ArrayList<>();
+
+        try{
+            if (hab.tieneAire()){tiene.add("Aire Condicionado");}else{no_tiene.add("Aire Condicionado");}
+            if (hab.tieneBalcon()){tiene.add("Balcon");}else{no_tiene.add("Balcon");}
+            if (hab.tieneCafetera()){tiene.add("Cafetera");}else{no_tiene.add("Cafetera");}
+            if (hab.tieneCalefaccion()){tiene.add("Calefaccion");}else{no_tiene.add("Calefaccion");}
+            if (hab.tieneCocina()){tiene.add("Cocina");}else{no_tiene.add("Cocina");}
+            if (hab.tieneDesayuno()){tiene.add("Desayuno");}else{no_tiene.add("Desayuno");}
+            if (hab.tienePlancha()){tiene.add("Plancha");}else{no_tiene.add("Plancha");}
+            if (hab.tieneRopaCama()){tiene.add("Ropa Cama");}else{no_tiene.add("Ropa Cama");}
+            if (hab.tieneSecador()){tiene.add("Secador");}else{no_tiene.add("Secador");}
+            if (hab.tieneTapetesHipo()){tiene.add("Tapetes Hipo");}else{no_tiene.add("Tapetes Hipo");}
+            if (hab.tieneTv()){tiene.add("TV");}else{no_tiene.add("TV");}
+            if (hab.tieneUsbA()){tiene.add("USB A");}else{no_tiene.add("USB A");}
+            if (hab.tieneUsbB()){tiene.add("USB B");}else{no_tiene.add("USB B");}
+            if (hab.tieneVista()){tiene.add("Vista");}else{no_tiene.add("Vista");}
+        }catch(Exception e){
+            System.out.println("Probablemente hay un problema de una de las habitaciones: " + e.getMessage());
+        }
+
+
+        StringBuilder tieneBuilder = new StringBuilder();
+        for (int i = 0; i < tiene.size(); i++) {
+            tieneBuilder.append(tiene.get(i));
+            if (i < tiene.size() - 1) {
+                tieneBuilder.append(", ");
+            }
+        }
+
+        StringBuilder noTieneBuilder = new StringBuilder();
+        for (int i = 0; i < no_tiene.size(); i++) {
+            noTieneBuilder.append(no_tiene.get(i));
+            if (i < no_tiene.size() - 1) {
+                noTieneBuilder.append(", ");
+            }
+        }
+
+        JLabel lblTiene = new JLabel("Tiene: " + tieneBuilder);
+        lblTiene.setAlignmentX(CENTER_ALIGNMENT);
+        panel.add(lblTiene);
+
+        JLabel lblNoTiene = new JLabel("No Tiene: " + noTieneBuilder);
+        lblNoTiene.setAlignmentX(CENTER_ALIGNMENT);
+        panel.add(lblNoTiene);
+
+        JLabel lblTamanoM2 = new JLabel("Tamaño en m^2: " + hab.getTamanhoM2());
+        lblTamanoM2.setAlignmentX(CENTER_ALIGNMENT);
+        panel.add(lblTamanoM2);
+
+        JLabel lblVoltajeAC = new JLabel("Voltaje AC: " + hab.getVoltajeAC());
+        lblVoltajeAC.setAlignmentX(CENTER_ALIGNMENT);
+        panel.add(lblVoltajeAC);
 
         JLabel lblCaracteristicasHotel = new JLabel("Características del Hotel");
         lblCaracteristicasHotel.setAlignmentX(CENTER_ALIGNMENT);
