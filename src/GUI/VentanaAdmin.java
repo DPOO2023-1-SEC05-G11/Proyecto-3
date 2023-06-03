@@ -1,14 +1,15 @@
 package GUI;
 
 import javax.swing.JFrame;
+import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 
 
 public class VentanaAdmin extends JFrame {
-	private JTabbedPane pestañas;
+	private JTabbedPane pestañas, panel3;
 	private panelRooms panel1;
 	private panelServices panel2;
-	private panelOcupacion panel3;
+	private panelOcupacion panelOccup;
 	
 	public VentanaAdmin() {
 		setLocationRelativeTo(null);
@@ -18,13 +19,14 @@ public class VentanaAdmin extends JFrame {
 		setLocationRelativeTo(null);
 		
 		pestañas = new JTabbedPane();
-		//pestañas.add("")
 		panel1 = new panelRooms();
 		panel2= new panelServices();
-		panel3 = new panelOcupacion();
+		panel3 = new JTabbedPane();
+		panelOccup = new panelOcupacion();
+		panel3.add("Occupacion", panelOccup);
 		pestañas.add("Services", panel2);
 		pestañas.add("Rooms", panel1);
-		pestañas.add("Ocupacion", panel3);
+		pestañas.add("Stats", panel3);
 		getContentPane().add(pestañas);
 
 
