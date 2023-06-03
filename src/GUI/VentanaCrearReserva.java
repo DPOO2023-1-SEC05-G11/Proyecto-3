@@ -15,6 +15,7 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.time.LocalDate;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -43,6 +44,8 @@ public class VentanaCrearReserva extends JFrame {
 	private JTextField textFieldDocumento;
 	private JTextField textFieldCorreo;
 	private JTextField textFieldTelefono;
+    private DefaultListModel<String> listModel;
+    private JScrollPane scrollPane;
 
 	public VentanaCrearReserva() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -115,11 +118,11 @@ public class VentanaCrearReserva extends JFrame {
 		panel_2.setLayout(new BorderLayout(0, 0));
 
 
-        DefaultListModel<String> listModel = new DefaultListModel<>();
+        listModel = new DefaultListModel<>();
         JList<String> habsSeleccionadasList = new JList<>(listModel);
         habsSeleccionadasList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 
-        JScrollPane scrollPane = new JScrollPane(habsSeleccionadasList);
+        scrollPane = new JScrollPane(habsSeleccionadasList);
         scrollPane.setPreferredSize(new Dimension(250, 500));
 
         habsSeleccionadasList.addMouseListener(new MouseAdapter() {
@@ -130,7 +133,6 @@ public class VentanaCrearReserva extends JFrame {
                         int selectedRoomID = Integer.parseInt(habsSeleccionadasList.getSelectedValue());
                         new VentanaShowRoom(Hotel.getInstance().buscarHabs1(selectedRoomID)).setVisible(true);
                     } catch (NumberFormatException ex) {
-                        // Handle the exception gracefully
                         System.out.println("Invalid room ID");
                     }
                 }
@@ -160,12 +162,7 @@ public class VentanaCrearReserva extends JFrame {
                 
                 if (Hotel.getInstance().buscarHabs1(Integer.parseInt(newItem)) != null)
                 {
-                    if (newItem != null && !newItem.isEmpty()) {
-                    listModel.addElement(newItem);
-                
-                    JScrollBar verticalScrollBar = scrollPane.getVerticalScrollBar();
-                    verticalScrollBar.setValue(verticalScrollBar.getMaximum());
-                }
+                    addHabitacion(newItem);
                 }else{
                     JOptionPane.showMessageDialog(null, "La habitacion no existe!", "ID error!", JOptionPane.WARNING_MESSAGE);
                 }
@@ -203,6 +200,7 @@ public class VentanaCrearReserva extends JFrame {
             }
         });
         
+
         
         btnAceptar.addActionListener(new ActionListener() {
             @Override
@@ -241,5 +239,25 @@ public class VentanaCrearReserva extends JFrame {
 		//pack();
 
 	}
+    
+    public void addHabitacion(String numeroCama)
+    {
+        if (numeroCama != null && !numeroCama.isEmpty()) {
+            listModel.addElement(numeroCama);
+        
+            JScrollBar verticalScrollBar = scrollPane.getVerticalScrollBar();
+            verticalScrollBar.setValue(verticalScrollBar.getMaximum());
+        }
+    }
+
+    public void setFechaI(LocalDate fecha)
+    {
+        textFieldInicio.setText(fecha.toString());
+    }
+
+    public void setNumNoches(int noches)
+    {
+        textFieldNoches.setText(Integer.toString(noches));
+    }
 
 }

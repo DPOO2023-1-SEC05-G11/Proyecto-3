@@ -949,6 +949,9 @@ public Integer[] ocupacionHabs() {
     return ocupacionHabs;
 }
 
+public ArrayList<Habitacion> getHabitaciones(){
+	return this.habitaciones;
+}
 
 
 
