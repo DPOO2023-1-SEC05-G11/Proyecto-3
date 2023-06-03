@@ -26,7 +26,8 @@ import javax.swing.JCheckBox;
 public class VentanaLogin extends JFrame implements ActionListener {
 	
 	JPanel panelPrincipal;
-	JTextField textFieldUsuario, textFieldContraseña;
+	JTextField textFieldUsuario;
+	JPasswordField textFieldContraseña;
 	JButton btnNewButton_1;
 	String tipo;
 
@@ -51,7 +52,7 @@ public class VentanaLogin extends JFrame implements ActionListener {
 		panelPrincipal.add(textFieldUsuario);
 		textFieldUsuario.setColumns(10);
 		
-		textFieldContraseña = new JTextField();
+		textFieldContraseña = new JPasswordField();
 		textFieldContraseña.setColumns(10);
 		textFieldContraseña.setBounds(138, 112, 189, 19);
 		panelPrincipal.add(textFieldContraseña);

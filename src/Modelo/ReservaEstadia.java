@@ -33,8 +33,16 @@ public class ReservaEstadia {
 				habitacion.addFechaOcupada(date);
 			}
 	    }
+
+		this.grupo = new ArrayList<Huesped>();
 		
 	}
+
+	public void addHuesped(Huesped huesped)
+	{
+		this.grupo.add(huesped);
+	}
+
 	
 
 	public void checkIn(ArrayList<Huesped> huespedes)

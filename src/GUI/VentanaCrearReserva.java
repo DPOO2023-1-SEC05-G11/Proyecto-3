@@ -46,6 +46,7 @@ public class VentanaCrearReserva extends JFrame {
 	private JTextField textFieldTelefono;
     private DefaultListModel<String> listModel;
     private JScrollPane scrollPane;
+    private ReservaEstadia reserva = null;
 
 	public VentanaCrearReserva() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -213,13 +214,14 @@ public class VentanaCrearReserva extends JFrame {
                 String correo = textFieldCorreo.getText();
                 String telefono = textFieldTelefono.getText();
                 Huesped huesped = Hotel.getInstance().crearHuesped(nombreHuesped, documento, correo, telefono);
-                int[] selectedItems = new int[listModel.getSize()];
+                int[] selectedHabs = new int[listModel.getSize()];
                 for (int i = 0; i < listModel.getSize(); i++) {
-                    selectedItems[i]=Integer.parseInt(listModel.getElementAt(i));
+                    selectedHabs[i]=Integer.parseInt(listModel.getElementAt(i));
                 }
+
+                reserva = CrearReserva(huesped, fechaInicio, numNoches, selectedHabs);
                 
-                
-                    if(Hotel.getInstance().ejecutarCrearReserva(huesped, fechaInicio, numNoches, selectedItems)){
+                    if(reserva!=null){
                         dispose();
                     }else{
                         JOptionPane.showMessageDialog(null, "Una de las habitaciones seleccionadas está ocupada en la fechas deseadas.", "Error!", JOptionPane.WARNING_MESSAGE);
@@ -239,6 +241,24 @@ public class VentanaCrearReserva extends JFrame {
 		//pack();
 
 	}
+
+    public ReservaEstadia CrearReserva(Huesped huesped, String fechaInicio, int numNoches, int[] selectedHabs)
+    {
+        try {
+            return Hotel.getInstance().ejecutarCrearReserva(huesped, fechaInicio, numNoches, selectedHabs);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            
+        }
+        return null;
+    }
+
+    public ReservaEstadia getReserva()
+    {
+        return this.reserva;
+    }
+    
     
     public void addHabitacion(String numeroCama)
     {
