@@ -11,3 +11,8 @@ facturaID=10;facturaTipo=consumo;documentoHuesped=9;precioTotal=5000.0;tipoServi
 facturaID=11;facturaTipo=reserva;huespedPrincipalDocumento=2;precioTotal=100.0;habitaciones(id:precio)=505:100.0;Consumos Individuales=null;Consumos por Habitacion=null;precioTotal Consumos Grupales=0.0
 facturaID=12;facturaTipo=consumo;documentoHuesped=890;precioTotal=10000.0;tipoServicio=guia
 facturaID=13;facturaTipo=reserva;huespedPrincipalDocumento=00;precioTotal=100.0;habitaciones(id:precio)=603:100.0;Consumos Individuales=null;Consumos por Habitacion=null;precioTotal Consumos Grupales=0.0
+facturaID=14;facturaTipo=reserva;huespedPrincipalDocumento=1022322244;precioTotal=2000.0;habitaciones(id:precio)=101:2000.0;Consumos Individuales=null;Consumos por Habitacion=null;precioTotal Consumos Grupales=0.0
+facturaID=1;facturaTipo=reserva;huespedPrincipalDocumento=1022322244;precioTotal=1000.0;habitaciones(id:precio)=101:1000.0;Consumos Individuales=null;Consumos por Habitacion=null;precioTotal Consumos Grupales=0.0
+facturaID=1;facturaTipo=reserva;huespedPrincipalDocumento=102;precioTotal=930.0;habitaciones(id:precio)=210:930.0;Consumos Individuales=null;Consumos por Habitacion=null;precioTotal Consumos Grupales=0.0
+facturaID=1;facturaTipo=reserva;huespedPrincipalDocumento=102;precioTotal=5200.0;habitaciones(id:precio)=403:5200.0;Consumos Individuales=null;Consumos por Habitacion=null;precioTotal Consumos Grupales=0.0
+

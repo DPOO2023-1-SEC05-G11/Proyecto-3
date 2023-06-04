@@ -276,6 +276,8 @@ public class VentanaManejarReserva extends JFrame {
                         
                         try {
                             Hotel.getInstance().checkOut(reserva);
+                            VentanaSelecPasarela ventanaPasarela = new VentanaSelecPasarela(null);
+                            ventanaPasarela.setVisible(true);
                             dispose();
                         } catch (Exception ex) {
                             System.out.println("An error occurred while executing: " + ex.getMessage());
