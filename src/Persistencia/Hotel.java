@@ -655,7 +655,26 @@ public class Hotel
 			preguntarHabitaciones(fecha, duracion);
 		}
 	}
+
+	public Double getPrecioTotalReserva(ReservaEstadia reserva){
+		Double precioTotal = 0.0;
+		for (Habitacion hab : reserva.getHabitaciones())
+		{
+			precioTotal += hab.getTarifa()*reserva.getDuracion();
+		}
+		for (Consumo consumo : reserva.getConsumos())
+		{
+			precioTotal += (double) consumo.getPrecioTotal();
+		}
+
+		return precioTotal;
+	}
 	
+	public ArrayList<Habitacion> getHabitaciones(){
+		return this.habitaciones;
+	}
+	
+
 	public ReservaEstadia ejecutarCrearReserva(Huesped huespedPrincipal, String fechaI, int duracion, int[] roomIDs) throws Exception {
 	    ArrayList<Habitacion> habitaciones = new ArrayList<Habitacion>();
 
@@ -941,9 +960,6 @@ public Integer[] ocupacionHabs() {
     return ocupacionHabs;
 }
 
-public ArrayList<Habitacion> getHabitaciones(){
-	return this.habitaciones;
-}
 
 
 

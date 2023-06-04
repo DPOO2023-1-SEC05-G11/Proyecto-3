@@ -89,6 +89,10 @@ public class Factura {
 	    
 	    return facturaBuilder.toString();
 	}
+
+	public Double getPrecioTotal(){
+		return precioTotal;
+	}
 	
 	
 	public String guardarStringReserva() {

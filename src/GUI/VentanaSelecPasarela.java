@@ -23,7 +23,8 @@ import javax.swing.JTextField;
 public class VentanaSelecPasarela extends JFrame implements ActionListener {
 	
 
-	JButton btnMercado, btnPayu, btnPaypal;
+	private JButton btnMercado, btnPayu, btnPaypal;
+	private Double valorTotal;
 	private JPanel PanelPrincipal;
 	private JPanel panelInfo;
 	private JLabel lblFecha;
@@ -36,19 +37,8 @@ public class VentanaSelecPasarela extends JFrame implements ActionListener {
 	private JTextField textFecha;
 	private JLabel lblCorreo;
 	private JTextField textCorreo;
-	/**public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VentanaSelecPasarela frame = new VentanaSelecPasarela(null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}/**/
 	public VentanaSelecPasarela(Double valor) {
+		valorTotal = valor;
 		setTitle("Pago");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 350, 368);
@@ -116,29 +106,6 @@ public class VentanaSelecPasarela extends JFrame implements ActionListener {
 		panelInfo.add(textCorreo);
 		textCorreo.setColumns(10);
 		
-		
-		/**
-		btnMercado.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				VentanaMercado mercadoPago = new VentanaMercado();
-				mercadoPago.setVisible(true);
-			}
-		});	
-		btnPaypal.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				VentanaPaypal payPal = new VentanaPaypal();
-				payPal.setVisible(true);
-			}
-		});	
-		btnPayu.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				VentanaPayu payU = new VentanaPayu();
-				payU.setVisible(true);
-			}
-		});	**/
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -151,16 +118,16 @@ public class VentanaSelecPasarela extends JFrame implements ActionListener {
 		PasarelaFactory factory = new PasarelaFactory();
 		if (e.getSource()==btnMercado) {
 			PasarelaDePago pasarela = factory.getPasarela("MERCADOPAGO");
-			resu = pasarela.hacerPago(nombre, correo, null, numero, cvv, fecha);
+			resu = pasarela.hacerPago(nombre, correo, valorTotal, numero, cvv, fecha);
 		} else if (e.getSource()==btnPayu) {
 			PasarelaDePago pasarela = factory.getPasarela("PAYU");
-			resu = pasarela.hacerPago(nombre, correo, null, numero, cvv, fecha);
+			resu = pasarela.hacerPago(nombre, correo, valorTotal, numero, cvv, fecha);
 		} else if (e.getSource()==btnPaypal) {
 			PasarelaDePago pasarela = factory.getPasarela("PAYPAL");
-			resu = pasarela.hacerPago(nombre, correo, null, numero, cvv, fecha);
+			resu = pasarela.hacerPago(nombre, correo, valorTotal, numero, cvv, fecha);
 		}
 		if (resu) {
-			JOptionPane.showMessageDialog(null, "Pago exitoso, Check Out completado");
+			JOptionPane.showMessageDialog(null, "Pago exitoso");
 			dispose();
 		} else {
 			JOptionPane.showMessageDialog(null, "Error en el pago");
