@@ -232,7 +232,7 @@ public class VentanaHuesped extends JFrame {
                                 @Override
                                 public void actionPerformed(ActionEvent e) {
                                     if (huespedes.size()==0){
-                                        JOptionPane.showMessageDialog(null, "Entre las informaciones de al menos un huesped.", "No Huespedes", JOptionPane.ERROR_MESSAGE);
+                                        JOptionPane.showMessageDialog(null, "Ingrese las informaciones de al menos un huesped.", "No Huespedes", JOptionPane.ERROR_MESSAGE);
                                     }else{
                                         for (Huesped h : huespedes) {
                                         reserva.addHuesped(h);
@@ -247,8 +247,9 @@ public class VentanaHuesped extends JFrame {
                                         JOptionPane.showMessageDialog(null, "Reservation confirmed. Payment will be done at check-out.", "Payment Confirmation", JOptionPane.INFORMATION_MESSAGE);
                                     } else if (choice == JOptionPane.YES_OPTION) {
                                         //Falta procesar el pago y mostrar "Payment accepted. Reservation Confirmed."
-                                        JFrame paymentWindow = new JFrame();
-                                        paymentWindow.setVisible(true);
+                                        int idHab = habitacionesList.getSelectedValue().getId();
+                                        VentanaSelecPasarela pasarela = new VentanaSelecPasarela(null);
+                                        pasarela.setVisible(true);
                                     }
                                     }
                                     

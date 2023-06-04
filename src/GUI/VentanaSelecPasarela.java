@@ -127,7 +127,7 @@ public class VentanaSelecPasarela extends JFrame implements ActionListener {
 			resu = pasarela.hacerPago(nombre, correo, valorTotal, numero, cvv, fecha);
 		}
 		if (resu) {
-			JOptionPane.showMessageDialog(null, "Pago exitoso, Check Out completado");
+			JOptionPane.showMessageDialog(null, "Pago exitoso");
 			dispose();
 		} else {
 			JOptionPane.showMessageDialog(null, "Error en el pago");
