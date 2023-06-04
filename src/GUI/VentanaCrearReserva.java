@@ -27,18 +27,15 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.AbstractListModel;
-import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 
 import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
 
 public class VentanaCrearReserva extends JFrame {
 
 	private JPanel panelPrincipal;
 	private JTextField textFieldInicio;
-	private JTextField textFieldFinal;
+	private Boolean acceptButtonClicked;
 	private JTextField textFieldNoches;
 	private JTextField textFieldNombre;
 	private JTextField textFieldDocumento;
@@ -196,6 +193,7 @@ public class VentanaCrearReserva extends JFrame {
                 int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to cancel?", "Confirm Cancel",
                         JOptionPane.YES_NO_OPTION);
                 if (option == JOptionPane.YES_OPTION) {
+                    acceptButtonClicked = false;
                     dispose();
                 }
             }
@@ -207,26 +205,39 @@ public class VentanaCrearReserva extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                String fechaInicio = textFieldInicio.getText();
-                int numNoches = Integer.parseInt(textFieldNoches.getText());
-                String nombreHuesped = textFieldNombre.getText();
-                String documento = textFieldDocumento.getText();
-                String correo = textFieldCorreo.getText();
-                String telefono = textFieldTelefono.getText();
-                Huesped huesped = Hotel.getInstance().crearHuesped(nombreHuesped, documento, correo, telefono);
-                int[] selectedHabs = new int[listModel.getSize()];
-                for (int i = 0; i < listModel.getSize(); i++) {
-                    selectedHabs[i]=Integer.parseInt(listModel.getElementAt(i));
-                }
+                    String fechaInicio = textFieldInicio.getText();
+                    int numNoches = Integer.parseInt(textFieldNoches.getText());
+                    String nombreHuesped = textFieldNombre.getText();
+                    String documento = textFieldDocumento.getText();
+                    String correo = textFieldCorreo.getText();
+                    String telefono = textFieldTelefono.getText();
 
-                reserva = CrearReserva(huesped, fechaInicio, numNoches, selectedHabs);
-                
-                    if(reserva!=null){
-                        dispose();
-                    }else{
-                        JOptionPane.showMessageDialog(null, "Una de las habitaciones seleccionadas está ocupada en la fechas deseadas.", "Error!", JOptionPane.WARNING_MESSAGE);
+                    if (fechaInicio.isEmpty() || numNoches <= 0 || nombreHuesped.isEmpty() || documento.isEmpty() || correo.isEmpty() || telefono.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Ingrese todas las informaciones necesarias.", "Error!", JOptionPane.WARNING_MESSAGE);
+                        return;
                     }
+
+                    Huesped huesped = Hotel.getInstance().crearHuesped(nombreHuesped, documento, correo, telefono);
+
+                    if (listModel.getSize() == 0)
+                    {
+                        JOptionPane.showMessageDialog(null, "Seleccione al menos una habitacion.", "Ningun Habitacion Seleccionada!", JOptionPane.WARNING_MESSAGE);
+                        return;
+                    }
+                    int[] selectedHabs = new int[listModel.getSize()];
+                    for (int i = 0; i < listModel.getSize(); i++) {
+                        selectedHabs[i]=Integer.parseInt(listModel.getElementAt(i));
+                    }
+
+                    reserva = CrearReserva(huesped, fechaInicio, numNoches, selectedHabs);
                     
+                        if(reserva!=null){
+                            acceptButtonClicked = true;
+                            dispose();
+                        }else{
+                            JOptionPane.showMessageDialog(null, "Una de las habitaciones seleccionadas está ocupada en la fechas deseadas.", "Error!", JOptionPane.WARNING_MESSAGE);
+                        }
+                        
                 } catch (NullPointerException ex) {
                     System.out.println("An error occurred while executing crearReserva: " + ex.getMessage());
                     JOptionPane.showMessageDialog(null, "Ingrese todas las informaciones necesarias.", "Error!", JOptionPane.WARNING_MESSAGE);
@@ -278,6 +289,10 @@ public class VentanaCrearReserva extends JFrame {
     public void setNumNoches(int noches)
     {
         textFieldNoches.setText(Integer.toString(noches));
+    }
+
+    public boolean isAcceptButtonClicked(){
+        return this.acceptButtonClicked;
     }
 
 }

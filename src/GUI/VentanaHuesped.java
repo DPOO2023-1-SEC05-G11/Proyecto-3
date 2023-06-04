@@ -135,148 +135,149 @@ public class VentanaHuesped extends JFrame {
         reserveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                VentanaCrearReserva crearReserva = new VentanaCrearReserva();
-                crearReserva.addWindowListener(new WindowAdapter() {
-                    @Override
-                    public void windowClosed(WindowEvent e) {
-                        if (crearReserva.getReserva() == null)
-                        {
-                            JOptionPane.showMessageDialog(null, "Hubo un error creando la reserva, verifique sus datos \n y elige habitaciones disponibles.", "Error!", JOptionPane.WARNING_MESSAGE);
-                        }else{
-                            ReservaEstadia reserva = crearReserva.getReserva();
+                if (habitacionesList.getSelectedValue() == null){
+                    JOptionPane.showMessageDialog(null, "Por favor busca y seleccione una habitación antes de reservar.", "Error!", JOptionPane.WARNING_MESSAGE);
+                }else{
+                    VentanaCrearReserva crearReserva = new VentanaCrearReserva();
+                    final boolean[] closeButtonClicked = { false };
+                    crearReserva.addWindowListener(new WindowAdapter() {
+                        @Override
+                        public void windowClosed(WindowEvent e) {
+                            if (!closeButtonClicked[0] && crearReserva.isAcceptButtonClicked()) {
+                                ReservaEstadia reserva = crearReserva.getReserva();
 
-                            ArrayList<Huesped> huespedes = new ArrayList<Huesped>();
+                                ArrayList<Huesped> huespedes = new ArrayList<Huesped>();
 
-                            JFrame frame = new JFrame("Add Huespedes");
-                            frame.setLocationRelativeTo(null);
-                            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                            frame.setSize(400, 300);
-                    
-                            JPanel panel = new JPanel();
-                            panel.setLayout(new BorderLayout());
-                    
-                            DefaultListModel<String> listModel = new DefaultListModel<>();
-                            JList<String> list = new JList<>(listModel);
-                    
-                            JScrollPane scrollPane = new JScrollPane(list);
-                            panel.add(scrollPane, BorderLayout.CENTER);
-                    
-                            JPanel buttonPanel = new JPanel();
-                            buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
-                    
-                            JLabel label1 = new JLabel("Nombre:");
-                            JTextField textField1 = new JTextField(10);
-                    
-                            JLabel label2 = new JLabel("Documento:");
-                            JTextField textField2 = new JTextField(10);
-                    
-                            JLabel label3 = new JLabel("Correo:");
-                            JTextField textField3 = new JTextField(10);
-                    
-                            JLabel label4 = new JLabel("Telefono:");
-                            JTextField textField4 = new JTextField(10);
-                    
-                            JButton addButton = new JButton("Add");
-                            addButton.addActionListener(new ActionListener() {
-                                @Override
-                                public void actionPerformed(ActionEvent e) {
-                                    Huesped huesped = Hotel.getInstance().crearHuesped(textField1.getText(), textField2.getText(), textField3.getText(), textField4.getText());
-                                    huespedes.add(huesped);
+                                JFrame frame = new JFrame("Add Huespedes");
+                                frame.setLocationRelativeTo(null);
+                                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                                frame.setSize(400, 300);
+                        
+                                JPanel panel = new JPanel();
+                                panel.setLayout(new BorderLayout());
+                        
+                                DefaultListModel<String> listModel = new DefaultListModel<>();
+                                JList<String> list = new JList<>(listModel);
+                        
+                                JScrollPane scrollPane = new JScrollPane(list);
+                                panel.add(scrollPane, BorderLayout.CENTER);
+                        
+                                JPanel buttonPanel = new JPanel();
+                                buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
+                        
+                                JLabel label1 = new JLabel("Nombre:");
+                                JTextField textField1 = new JTextField(10);
+                        
+                                JLabel label2 = new JLabel("Documento:");
+                                JTextField textField2 = new JTextField(10);
+                        
+                                JLabel label3 = new JLabel("Correo:");
+                                JTextField textField3 = new JTextField(10);
+                        
+                                JLabel label4 = new JLabel("Telefono:");
+                                JTextField textField4 = new JTextField(10);
+                        
+                                JButton addButton = new JButton("Add");
+                                addButton.addActionListener(new ActionListener() {
+                                    @Override
+                                    public void actionPerformed(ActionEvent e) {
+                                        Huesped huesped = Hotel.getInstance().crearHuesped(textField1.getText(), textField2.getText(), textField3.getText(), textField4.getText());
+                                        huespedes.add(huesped);
 
-                                    listModel.addElement(huesped.toString());
+                                        listModel.addElement(huesped.toString());
 
-                                    textField1.setText("");
-                                    textField2.setText("");
-                                    textField3.setText("");
-                                    textField4.setText("");
-                                }
-                            });
-                            frame.getRootPane().setDefaultButton(addButton);
-                    
-                            JButton removeButton = new JButton("Remove");
-                            removeButton.addActionListener(new ActionListener() {
-                                @Override
-                                public void actionPerformed(ActionEvent e) {
-                                    int selectedIndex = list.getSelectedIndex();
-                                    if (selectedIndex != -1) {
-                                        String selectedHuesped = listModel.elementAt(selectedIndex);
-                                        Iterator<Huesped> iterator = huespedes.iterator();
-                                        while (iterator.hasNext()) {
-                                            Huesped huesped = iterator.next();
-                                            if (huesped.toString().equals(selectedHuesped)) {
-                                                iterator.remove();
+                                        textField1.setText("");
+                                        textField2.setText("");
+                                        textField3.setText("");
+                                        textField4.setText("");
+                                    }
+                                });
+                                frame.getRootPane().setDefaultButton(addButton);
+                        
+                                JButton removeButton = new JButton("Remove");
+                                removeButton.addActionListener(new ActionListener() {
+                                    @Override
+                                    public void actionPerformed(ActionEvent e) {
+                                        int selectedIndex = list.getSelectedIndex();
+                                        if (selectedIndex != -1) {
+                                            String selectedHuesped = listModel.elementAt(selectedIndex);
+                                            Iterator<Huesped> iterator = huespedes.iterator();
+                                            while (iterator.hasNext()) {
+                                                Huesped huesped = iterator.next();
+                                                if (huesped.toString().equals(selectedHuesped)) {
+                                                    iterator.remove();
+                                                }
+                                            }
+                                            listModel.remove(selectedIndex);
+                                        }
+                                    }
+                                });
+                                
+                        
+                                buttonPanel.add(label1);
+                                buttonPanel.add(textField1);
+                                buttonPanel.add(label2);
+                                buttonPanel.add(textField2);
+                                buttonPanel.add(label3);
+                                buttonPanel.add(textField3);
+                                buttonPanel.add(label4);
+                                buttonPanel.add(textField4);
+                                buttonPanel.add(addButton);
+                                buttonPanel.add(removeButton);
+                        
+                                panel.add(buttonPanel, BorderLayout.EAST);
+
+                        
+                                JButton confirmButton = new JButton("Confirm");
+                                confirmButton.addActionListener(new ActionListener() {
+                                    @Override
+                                    public void actionPerformed(ActionEvent e) {
+                                        if (huespedes.size()==0){
+                                            JOptionPane.showMessageDialog(null, "Ingrese las informaciones de al menos un huesped.", "No Huespedes", JOptionPane.ERROR_MESSAGE);
+                                        }else{
+                                            for (Huesped h : huespedes) {
+                                                reserva.addHuesped(h);
+                                            }
+                                            frame.dispose();
+                                    
+                                            int choice = JOptionPane.showOptionDialog(null, "Do you want to pay now or at check-out?", "Payment Option",
+                                                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                                                    new String[]{"Now", "Later"}, null);
+                                    
+                                            if (choice == JOptionPane.NO_OPTION) {
+                                                JOptionPane.showMessageDialog(null, "Reservation confirmed. Payment will be done at check-out.", "Payment Confirmation", JOptionPane.INFORMATION_MESSAGE);
+                                            } else if (choice == JOptionPane.YES_OPTION) {
+                                                //Falta procesar el pago y mostrar "Payment accepted. Reservation Confirmed."
+                                                Double tarifa = habitacionesList.getSelectedValue().getTarifa();
+                                                VentanaSelecPasarela pasarela = new VentanaSelecPasarela(tarifa);
+                                                pasarela.setVisible(true);
                                             }
                                         }
-                                        listModel.remove(selectedIndex);
                                     }
-                                }
-                            });
-                            
-                    
-                            buttonPanel.add(label1);
-                            buttonPanel.add(textField1);
-                            buttonPanel.add(label2);
-                            buttonPanel.add(textField2);
-                            buttonPanel.add(label3);
-                            buttonPanel.add(textField3);
-                            buttonPanel.add(label4);
-                            buttonPanel.add(textField4);
-                            buttonPanel.add(addButton);
-                            buttonPanel.add(removeButton);
-                    
-                            panel.add(buttonPanel, BorderLayout.EAST);
+                                });
+                                buttonPanel.add(confirmButton);
 
-                    
-                            JButton confirmButton = new JButton("Confirm");
-                            confirmButton.addActionListener(new ActionListener() {
-                                @Override
-                                public void actionPerformed(ActionEvent e) {
-                                    if (huespedes.size()==0){
-                                        JOptionPane.showMessageDialog(null, "Ingrese las informaciones de al menos un huesped.", "No Huespedes", JOptionPane.ERROR_MESSAGE);
-                                    }else{
-                                        for (Huesped h : huespedes) {
-                                        reserva.addHuesped(h);
-                                    }
-                                    frame.dispose();
-                            
-                                    int choice = JOptionPane.showOptionDialog(null, "Do you want to pay now or at check-out?", "Payment Option",
-                                            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                                            new String[]{"Now", "Later"}, null);
-                            
-                                    if (choice == JOptionPane.NO_OPTION) {
-                                        JOptionPane.showMessageDialog(null, "Reservation confirmed. Payment will be done at check-out.", "Payment Confirmation", JOptionPane.INFORMATION_MESSAGE);
-                                    } else if (choice == JOptionPane.YES_OPTION) {
-                                        //Falta procesar el pago y mostrar "Payment accepted. Reservation Confirmed."
-                                        int idHab = habitacionesList.getSelectedValue().getId();
-                                        VentanaSelecPasarela pasarela = new VentanaSelecPasarela(null);
-                                        pasarela.setVisible(true);
-                                    }
-                                    }
-                                    
-                                }
-                            });
-                                    
+                                frame.setContentPane(panel);
+                                frame.setVisible(true);
 
+                                frame.pack();
 
-                                    buttonPanel.add(confirmButton);
-
-                                    frame.setContentPane(panel);
-                                    frame.setVisible(true);
-
-                                    frame.pack();
-
-                                    String message = "Por favor entre las informaciones de todos los huespedes del grupo";
-                                    String title = "Huespedes";
-                                    JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
-                                    }
-                    }
-                });
-                crearReserva.setVisible(true);
-                crearReserva.addHabitacion(Integer.toString(habitacionesList.getSelectedValue().getId()));
-                crearReserva.setFechaI(fechaInicial);
-                crearReserva.setNumNoches(duracion);
-                
-                
+                                String message = "Por favor entre las informaciones de todos los huespedes del grupo";
+                                String title = "Huespedes";
+                                JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
+                                
+                            }
+                        }
+                        @Override
+                        public void windowClosing(WindowEvent e) {
+                            closeButtonClicked[0] = true;
+                        }
+                    });
+                    crearReserva.setVisible(true);
+                    crearReserva.addHabitacion(Integer.toString(habitacionesList.getSelectedValue().getId()));
+                    crearReserva.setFechaI(fechaInicial);
+                    crearReserva.setNumNoches(duracion);
+                }   
             }
         });
     }
