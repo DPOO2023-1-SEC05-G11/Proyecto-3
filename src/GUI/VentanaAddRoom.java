@@ -293,7 +293,7 @@ public class VentanaAddRoom extends JFrame implements ActionListener {
 				
 				if (Hotel.getInstance().buscarHabs1(id) != null)
 				{
-					JOptionPane.showMessageDialog(null, "Ya existe la habitacion 1610.");	
+					JOptionPane.showMessageDialog(null, "Ya existe la habitacion.");	
 				}else{
 					Hotel.getInstance().anadirHabs1(id, tipo, balcon, vista, cocina, listaCamas, tarifa, false, tamanhoM2, aire,
 					calefaccion, tv, cafetera, ropaCama, tapetesHipo, plancha, secador, voltajeAC, usbA, usbB, desayuno);
@@ -306,7 +306,7 @@ public class VentanaAddRoom extends JFrame implements ActionListener {
 				
 			} catch (NumberFormatException e1) {
 				System.err.println("Exception occurred: " + e1);
-				JOptionPane.showMessageDialog(null, "Invalid ID. Please enter a valid numeric value.");
+				JOptionPane.showMessageDialog(null, "Invalid ID or Tarifa. Please enter a valid numeric value.");
 			} catch (Exception e1) {
 				System.err.println("Exception occurred: " + e1);
 				JOptionPane.showMessageDialog(null, "An error occurred. Please check the input.");
