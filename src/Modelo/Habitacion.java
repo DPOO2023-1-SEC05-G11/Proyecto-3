@@ -270,16 +270,7 @@ public class Habitacion {
 	
 	
 	public String toString() {
-	    String camaString = "";
-
-	    for (int i = 0; i < 3; i++) {
-	        if (i < camas.size()) {
-	            camaString += "Cama " + (i + 1) + ": " + camas.get(i) + ", ";
-	        }
-	    }
-	    return "Habitacion [id=" + id + ", tipo=" + tipo + ", balcon=" + balcon + 
-	    		", vista=" + vista + ", cocina=" + cocina + ", espacio adultos="+espacioAdultos+", espacio ninos="+espacioNinos
-	    		+", camas=" + camaString + "tarifa=" + tarifa + ", ocupado=" + ocupado + "]";
+	    return "Habitacion " + id;
 	}
 	
 }
