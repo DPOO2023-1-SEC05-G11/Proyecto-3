@@ -1,0 +1,1 @@
+Para visualizar adecuadamente las gráficas, se debe cambiar pestañas, es decir volver a la de ventas y aparecerán correctamente. (Sólo si es el caso)
