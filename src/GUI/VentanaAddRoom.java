@@ -1,6 +1,5 @@
 package GUI;
 
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -12,10 +11,8 @@ import Modelo.Cama;
 import Persistencia.Hotel;
 
 import java.awt.BorderLayout;
-import java.awt.Container;
 import java.awt.Dimension;
 
-import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
 import javax.swing.JTextField;
@@ -31,7 +28,6 @@ import java.awt.FlowLayout;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
-import javax.swing.AbstractListModel;
 
 public class VentanaAddRoom extends JFrame implements ActionListener {
 

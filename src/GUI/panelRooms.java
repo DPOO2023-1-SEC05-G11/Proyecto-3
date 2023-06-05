@@ -1,14 +1,12 @@
 package GUI;
 
 import javax.swing.JPanel;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 import Persistencia.Hotel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.FileFilter;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;

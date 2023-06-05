@@ -2,8 +2,6 @@ package GUI;
 
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -18,7 +16,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -26,7 +23,6 @@ import java.awt.event.ActionListener;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.Random;
 
 public class panelOcupacion extends JSplitPane  {
 
@@ -243,17 +239,6 @@ public class panelOcupacion extends JSplitPane  {
         bottomPanel.repaint();
     }
     
-    
-    
-    
-
-    private Color getRandomColor(Random random) {
-        int red = random.nextInt(256);
-        int green = random.nextInt(256);
-        int blue = random.nextInt(256);
-        return new Color(red, green, blue);
-    }
-
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(900, 400);

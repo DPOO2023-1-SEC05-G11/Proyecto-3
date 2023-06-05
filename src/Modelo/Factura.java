@@ -1,6 +1,5 @@
 package Modelo;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import Persistencia.Hotel;

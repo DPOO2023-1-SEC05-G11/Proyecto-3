@@ -26,7 +26,6 @@ import javax.swing.JOptionPane;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 
-import java.awt.FlowLayout;
 
 public class VentanaManejarReserva extends JFrame {
 

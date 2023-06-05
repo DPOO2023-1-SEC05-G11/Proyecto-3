@@ -2,7 +2,6 @@ package GUI;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
 import Modelo.Servicio;
@@ -15,17 +14,14 @@ import javax.swing.JFileChooser;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.EOFException;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
-import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 
 public class panelServices extends JPanel implements ActionListener{

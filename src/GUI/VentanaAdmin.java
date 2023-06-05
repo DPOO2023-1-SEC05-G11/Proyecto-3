@@ -1,7 +1,6 @@
 package GUI;
 
 import javax.swing.JFrame;
-import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 
 

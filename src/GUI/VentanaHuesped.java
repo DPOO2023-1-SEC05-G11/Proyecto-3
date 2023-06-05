@@ -16,9 +16,6 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.atomic.AtomicBoolean;
-
 public class VentanaHuesped extends JFrame {
     private JTextField textField1;
     private JTextField textField2;
