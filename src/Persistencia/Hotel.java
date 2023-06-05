@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.foreign.ValueLayout.OfAddress;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -978,6 +979,25 @@ public void facturarConsumoResto(String[] array) {
 	LoaderSaver.salvarConsumosResto(restoFactura);
 }
 
+public HashMap<String, int[]> ventasPorProdResto(){
+	HashMap<String, int[]> ventasPorProd = new HashMap<>();
+	Servicio restaurante = servicios.get("restaurante");
+	for (String productoNombre : restaurante.getMap().keySet()){
+		int cantidad = 0, valorTot = 0;
+		for(String consumo : restoFactura){
+			for(String producto : consumo.split(";"))
+			{
+				if(producto.split(",")[0].equals(productoNombre)){
+					String precioString = producto.split(",")[1];
+					valorTot += Integer.parseInt(precioString.substring(precioString.indexOf("$COP: ") + "$COP: ".length()));
+					cantidad++;
+				}
+			}
+		}
+		ventasPorProd.put(productoNombre, new int[]{cantidad, valorTot});
+	}
+	return ventasPorProd;
+}
 
 
 public static void main(String[] args)
