@@ -8,6 +8,7 @@ public class VentanaAdmin extends JFrame {
 	private JTabbedPane pestañas, panel3;
 	private panelRooms panel1;
 	private panelServices panel2;
+	private panelVentasResto panelVentas;
 	private panelOcupacion panelOccup;
 	
 	public VentanaAdmin() {
@@ -21,7 +22,9 @@ public class VentanaAdmin extends JFrame {
 		panel1 = new panelRooms();
 		panel2= new panelServices();
 		panel3 = new JTabbedPane();
+		panelVentas = new panelVentasResto();
 		panelOccup = new panelOcupacion();
+		panel3.add("Ventas", panelVentas);
 		panel3.add("Occupacion", panelOccup);
 		pestañas.add("Services", panel2);
 		pestañas.add("Rooms", panel1);
