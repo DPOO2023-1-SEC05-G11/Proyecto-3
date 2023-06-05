@@ -1,0 +1,3 @@
+Note que todos los documentos y gráficas están en un zip dentro del proyecto. 
+
+Para las gráficas de los reportes, se usó JFree 1.0.19 y JCommon 1.0.29 debido a que la nueva versión exigía JDK 1.11.X y nosotros teníamos JDK 1.8.X. Las librerías deberían estar incluídas en el zip. Estos son los links: (https://sourceforge.net/projects/jfreechart/) pide por separado a JCommon (https://sourceforge.net/projects/jfreechart/files/3.%20JCommon/1.0.23/) 
