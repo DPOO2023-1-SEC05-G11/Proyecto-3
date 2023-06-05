@@ -10,6 +10,8 @@ import java.awt.Dimension;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.event.ListDataEvent;
+import javax.swing.event.ListDataListener;
 
 import Modelo.*;
 import Persistencia.Hotel;
@@ -17,6 +19,7 @@ import Persistencia.Hotel;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
+import javax.swing.DefaultListSelectionModel;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -26,6 +29,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JList;
@@ -45,7 +49,7 @@ public class panelConsumo extends JPanel {
 	private static double precioTotal = 0.0;
 	private static DefaultListModel<String> listModel = new DefaultListModel<>();
     private static JLabel lblPrecioTotal;
-	
+
 	public panelConsumo() {
 		setLayout(new GridLayout(1, 2, 0, 0));
 		
@@ -173,6 +177,17 @@ public class panelConsumo extends JPanel {
 		
 		JList<String> list = new JList<>();
 		list.setLayoutOrientation(JList.VERTICAL_WRAP);
+
+		ListSelectionModel selectionModel = new DefaultListSelectionModel() {
+            @Override
+            public void setSelectionInterval(int index0, int index1) {
+                if (listModel.getSize() == 0) {
+                    super.setSelectionInterval(index0, index1);
+                }
+            }
+        };
+
+		list.setSelectionModel(selectionModel);
 
 		Set<String> servicios = Hotel.getInstance().getServicios().keySet();
 		String[] values = servicios.toArray(new String[servicios.size()]);
@@ -341,7 +356,7 @@ public class panelConsumo extends JPanel {
 
 	private static void addProdDialog(JPanel parentPanel, HashMap<String, Integer> hashMap) {
 
-        JDialog dialog = new JDialog((Frame) SwingUtilities.getWindowAncestor(parentPanel), "Custom Dialog", true);
+        JDialog dialog = new JDialog((Frame) SwingUtilities.getWindowAncestor(parentPanel), "Add Product", true);
         dialog.setPreferredSize(new Dimension(300, 200));
         dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
@@ -367,10 +382,8 @@ public class panelConsumo extends JPanel {
 					String nombre = selectedItem.split(",")[0].trim();
 					int precio = hashMap.get(nombre);
 		
-					// Add the selected item to the listProd
 					listModel.addElement(selectedItem);
 		
-					// Update the total price
 					precioTotal += precio;
 					lblPrecioTotal.setText("$COP " + precioTotal);
 		
