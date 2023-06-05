@@ -10,8 +10,6 @@ import java.awt.Dimension;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
-import javax.swing.event.ListDataEvent;
-import javax.swing.event.ListDataListener;
 
 import Modelo.*;
 import Persistencia.Hotel;
@@ -49,6 +47,7 @@ public class panelConsumo extends JPanel {
 	private static double precioTotal = 0.0;
 	private static DefaultListModel<String> listModel = new DefaultListModel<>();
     private static JLabel lblPrecioTotal;
+	private JList<String> list = new JList<>();
 
 	public panelConsumo() {
 		setLayout(new GridLayout(1, 2, 0, 0));
@@ -175,7 +174,7 @@ public class panelConsumo extends JPanel {
 		panelDer.add(panelServ);
 		panelServ.setLayout(new GridLayout(0, 2, 0, 0));
 		
-		JList<String> list = new JList<>();
+		
 		list.setLayoutOrientation(JList.VERTICAL_WRAP);
 
 		ListSelectionModel selectionModel = new DefaultListSelectionModel() {
@@ -302,55 +301,73 @@ public class panelConsumo extends JPanel {
 		btnFacturar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {
-					String documentoHuespedPrincipal = documentoHPrincipal.getText();
-					Huesped huesped = new Huesped(textFieldNombre.getText(), textFieldDocumento.getText(), textFieldCorreo.getText(), textFieldTelefono.getText());
-					String tipo = "";
-					if (individual.isSelected()) {
-						tipo = "individual";
-					} else if (habitacion.isSelected()) {
-						tipo = "habitacion";
-					} else if (grupo.isSelected()) {
-						tipo = "grupo";
+				if (listModel.getSize()==0)
+				{
+					JOptionPane.showMessageDialog(null, "Por favor seleccione al menos un producto antes de facturar", "Seleccione Producto", JOptionPane.WARNING_MESSAGE);
+				}else if (textFieldNombre.getText().isEmpty() || textFieldDocumento.getText().isEmpty() || textFieldCorreo.getText().isEmpty() || 
+							textFieldTelefono.getText().isEmpty() || documentoHPrincipal.getText().isEmpty() || grupoTipo.getSelection() == null ||
+							grupoPagado.getSelection() == null){
+					JOptionPane.showMessageDialog(null, "Por favor entre datos validos para el huesped", "Datos Vacíos", JOptionPane.WARNING_MESSAGE);
+				}else{
+					try {
+						String documentoHuespedPrincipal = documentoHPrincipal.getText();
+						
+							Huesped huesped = new Huesped(textFieldNombre.getText(), textFieldDocumento.getText(), textFieldCorreo.getText(), textFieldTelefono.getText());
+						
+						String tipo = "";
+						if (individual.isSelected()) {
+							tipo = "individual";
+						} else if (habitacion.isSelected()) {
+							tipo = "habitacion";
+						} else if (grupo.isSelected()) {
+							tipo = "grupo";
+						}
+						boolean yaPagado = btnSi.isSelected();
+						Servicio servicio = Hotel.getInstance().getServicios().get(list.getSelectedValue().toLowerCase());
+
+
+						Consumo consumo = new Consumo(servicio, yaPagado, huesped, documentoHuespedPrincipal, tipo);
+
+						consumo.setPrecioTotal((int) precioTotal);
+
+						int result = JOptionPane.showConfirmDialog(null, "Está seguro de que quieres faturar este consumo?", "Confirmation", JOptionPane.YES_NO_OPTION);
+
+						if (result == JOptionPane.YES_OPTION) {
+
+							Hotel.getInstance().facturarConsumo(consumo, documentoHuespedPrincipal);
+							if (list.getSelectedValue().equals("Restaurante"))
+							{
+								String[] stringArray = new String[listModel.getSize()];
+								for (int i = 0; i < listModel.getSize(); i++) {
+									stringArray[i] = listModel.getElementAt(i);
+								}
+
+								Hotel.getInstance().facturarConsumoResto(stringArray);
+							}
+							
+							// Clear
+							documentoHPrincipal.setText("");
+							textFieldNombre.setText("");
+							textFieldDocumento.setText("");
+							textFieldCorreo.setText("");
+							textFieldTelefono.setText("");
+
+							grupoTipo.clearSelection();
+							grupoPagado.clearSelection();
+
+							listModel.removeAllElements();
+
+							precioTotal = 0.0;
+							lblPrecioTotal.setText("$COP " + precioTotal);
+						}
+					} catch (Exception e3) {
+						
+						System.out.println("An error occurred while executing Facturar: " + e3.getMessage());
+						JOptionPane.showMessageDialog(null, "Recuerde hacer el check-in antes de aprovechar de los servicios del hotel.", "Check In!", JOptionPane.WARNING_MESSAGE);
 					}
-					boolean yaPagado = btnSi.isSelected();
-					Servicio servicio = Hotel.getInstance().getServicios().get(list.getSelectedValue().toLowerCase());
-
-					Consumo consumo = new Consumo(servicio, yaPagado, huesped, documentoHuespedPrincipal, tipo);
-
-					consumo.setPrecioTotal((int) precioTotal);
-
-					int result = JOptionPane.showConfirmDialog(null, "Está seguro de que quieres faturar este consumo?", "Confirmation", JOptionPane.YES_NO_OPTION);
-
-					if (result == JOptionPane.YES_OPTION) {
-
-						Hotel.getInstance().facturarConsumo(consumo, documentoHuespedPrincipal);
-
-						// Clear
-						documentoHPrincipal.setText("");
-						textFieldNombre.setText("");
-						textFieldDocumento.setText("");
-						textFieldCorreo.setText("");
-						textFieldTelefono.setText("");
-
-						grupoTipo.clearSelection();
-						grupoPagado.clearSelection();
-
-						listModel.removeAllElements();
-
-						precioTotal = 0.0;
-						lblPrecioTotal.setText("$COP " + precioTotal);
-					}
-				} catch (Exception e3) {
-					
-					System.out.println("An error occurred while executing Facturar: " + e3.getMessage());
-					JOptionPane.showMessageDialog(null, "Recuerde hacer el check-in antes de aprovechar de los servicios del hotel.", "Check In!", JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});
-		
-		
-
 	}
 
 

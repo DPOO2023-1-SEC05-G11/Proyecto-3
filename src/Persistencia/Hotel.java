@@ -30,6 +30,8 @@ public class Hotel
 	private ArrayList<String> facturas = new ArrayList<String>();
 
 	private ArrayList<String> huespedUsuarios = new ArrayList<String>();
+
+	private ArrayList<String> restoFactura = new ArrayList<String>();
 		
 	/**
 	 * Este método sirve para imprimir un mensaje en la consola pidiéndole
@@ -122,6 +124,9 @@ public class Hotel
 
 		this.huespedUsuarios = LoaderSaver.cargarUsuarios();
 		LoaderSaver.salvarUsuarios(huespedUsuarios);
+
+		this.restoFactura = LoaderSaver.cargarConsumosResto();
+		LoaderSaver.salvarConsumosResto(restoFactura);
 	}
 	
 	public void ejecutarAplicacion()
@@ -960,7 +965,18 @@ public Integer[] ocupacionHabs() {
     return ocupacionHabs;
 }
 
+public void facturarConsumoResto(String[] array) {
+	StringBuilder factura = new StringBuilder();
+	for (String s : array)
+	{
+		factura.append(s + ";");
+	}
+	factura.deleteCharAt(factura.length()-1);
 
+	restoFactura.add(factura.toString());
+
+	LoaderSaver.salvarConsumosResto(restoFactura);
+}
 
 
 

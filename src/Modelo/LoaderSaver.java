@@ -184,6 +184,37 @@ public class LoaderSaver {
             System.out.println("An error occurred: " + e.getMessage());
         }
 	}
+
+	public static void salvarConsumosResto(ArrayList<String> restoFactura) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("data/restoFacturas.txt"))) {
+            for (String line : restoFactura) {
+                if (!line.isEmpty()) {
+                    writer.write(line);
+                    writer.newLine();
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+
+	public static ArrayList<String> cargarConsumosResto() {
+        ArrayList<String> consumosResto = new ArrayList<>();
+        String fileName = "data/restoFacturas.txt";
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (!line.isEmpty()) {
+                    consumosResto.add(line);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return consumosResto;
+    }
 	
 	
 /////////////////////////////Carga de Reservas////////////////////////////////////////

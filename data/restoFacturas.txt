@@ -1,0 +1,3 @@
+papas medianas, $COP: 5500;agua cristal con gas, $COP: 5000;hawaiana, $COP: 20000
+ensalada mexicana, $COP: 20900;hawaiana, $COP: 20000;gaseosa, $COP: 5000;papas medianas, $COP: 5500;corralita, $COP: 13000;todoterreno, $COP: 25000
+agua cristal con gas, $COP: 5000;agua cristal con gas, $COP: 5000;agua cristal con gas, $COP: 5000;agua cristal con gas, $COP: 5000;agua cristal con gas, $COP: 5000
