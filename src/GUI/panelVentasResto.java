@@ -52,6 +52,7 @@ public class panelVentasResto extends JPanel {
 
         CombinedRangeCategoryPlot combinedRangePlot = new CombinedRangeCategoryPlot();
         combinedRangePlot.add(combinedDomainPlot);
+        combinedRangePlot.getRangeAxis().setVisible(false);
 
         JFreeChart combinedChart = new JFreeChart("Ventas del Restaurante", combinedRangePlot);
         ChartFrame frame = new ChartFrame("Sales by Product", combinedChart);
